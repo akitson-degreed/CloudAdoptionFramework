@@ -1,44 +1,100 @@
-# Microsoft Cloud Adoption Framework for Azure
+[Overview](./) | [Installation](INSTALLATION.md) | [Updating](UPDATING.md) | [Using the API](USINGTHEAPI.md) | [Version History](VERSIONHISTORY.md) | [FAQ](FAQ.md) | [Contributors](CONTRIBUTORS.md)
 
-This repo contains code samples which support and accelerate the adoption guidance found in the [Cloud Adoption Framework](https://aka.ms/CAF).
+# Azure Naming Tool v2 - Overview
 
-Cloud Adoption Framework is the One Microsoft voice for cloud adoption, consolidating and sharing best practices from Microsoft employees, partners, and customers. In this framework, customers will find tools, guidance, and narratives to help shape technology, business, and people strategies in an effort to drive desired business outcomes during each adoption effort. This lifecycle "product" aligns guidance to various phases and iterations of the typical cloud adoption lifecycle to ensure easy access to the right guidance at the right time.
+Stay up to date on new features and announcements here:
 
-## Documentation repository
+![2021 Twitter logo - blue](https://user-images.githubusercontent.com/13591910/199250655-6f60c584-3a47-46af-a161-64908b7894fc.png) [AzureNamingTool](https://twitter.com/azurenamingtool)
 
-If you're looking to contribute to or report an issue regarding the Cloud Adoption Framework documentation found on Microsoft Docs, please visit the [Cloud Adoption Framework documentation repository on GitHub](https://github.com/MicrosoftDocs/cloud-adoption-framework).
+<img src="./wwwroot/images/AzureNamingToolLogo.png?raw=true" alt="Image representing the Azure Naming Tool" title="Azure Naming Tool" height="150"/>
 
-<!--
-![Cloud Adoption Framework overview](https://docs.microsoft.com/azure/architecture/cloud-adoption/_images/cloud-adoption-framework-overview.png) 
--->
+[Overview](#overview)
 
-## Contributing
+[Azure Academy Video](#azure-academy-video)
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
+[Project Structure](#project-structure)
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+[Installation](#installation)
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+[Important Notes](#important-notes)
 
-## Legal Notices
+[Pages](#pages)
 
-Microsoft and any contributors grant you a license to the Microsoft documentation and other content
-in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode),
-see the [LICENSE](LICENSE) file, and grant you a license to any code in the repository under the [MIT License](https://opensource.org/licenses/MIT), see the
-[LICENSE-CODE](LICENSE-CODE) file.
+## Overview
 
-Microsoft, Windows, Microsoft Azure and/or other Microsoft products and services referenced in the documentation
-may be either trademarks or registered trademarks of Microsoft in the United States and/or other countries.
-The licenses for this project do not grant you rights to use any Microsoft names, logos, or trademarks.
-Microsoft's general trademark guidelines can be found at http://go.microsoft.com/fwlink/?LinkID=254653.
+The Naming Tool was developed using a naming pattern based on [Microsoft's best practices](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging). Once an administrator has defined the organizational components, users can use the tool to generate a name for the desired Azure resource.
 
-Privacy information can be found at https://privacy.microsoft.com/en-us/
+**Want a deep dive into the tool?**
 
-Microsoft and any contributors reserve all other rights, whether under their respective copyrights, patents,
-or trademarks, whether by implication, estoppel or otherwise.
+Check out [Bryan Soltis's](https://github.com/BryanSoltis) blog here: [Deep Diving into the Azure Naming Tool](https://soltisweb.com/blog/detail/2022-12-02-deep-diving-into-the-azure-naming-tool)
+
+## Azure Academy Video
+[Dean Cefola](https://github.com/DeanCefola) with [Azure Academy](https://www.youtube.com/c/AzureAcademy) made a great overview video. Click the image below to view the video on installing and configuring the tool as a container.
+
+[![Azure Academy Overview Video](./wwwroot/Screenshots/AzureAcademyVideo.png)](https://youtu.be/Ztmxx_KhZdE)
+
+
+## Project Structure
+
+The Azure Naming Tool is a .NET 6 Blazor application with a RESTful API. The UI consists of several pages to allow the configuration and generation of Azure Resource names. The API provides a programmatic interface for the functionality. Additionally, the application contains Docker support, allowing the site to be run as a stand-alone application or a container.
+
+### Project Components
+
+* UI/Admin
+* API
+* JSON configuration files
+* Dockerfile
+
+## Installation
+
+* [Run as a Docker image](INSTALLATION.md#run-as-a-docker-image) (Local development)
+
+* [Run as an Azure Web App Using GitHub Action](INSTALLATION.md#run-as-an-azure-web-app-using-github-action) (.NET Application running in an Azure App Service, non-container)
+
+* [Run as a Web App for Containers](INSTALLATION.md#run-as-a-web-app-for-containers) (Single container running in an Azure App Service)
+
+* [Run as an Azure Container App](INSTALLATION.md#run-as-an-azure-container-app) (Single container running in an Azure Container App)
+
+* [Run as a Stand-Alone Site](INSTALLATION.md#run-as-a-stand-alone-site) 
+
+## Important Notes
+
+The following are important notes/aspects of the Azure Naming Tool:
+
+* The application is designed to run as a stand-alone solution, with no internet/Azure connection.
+* The application can be run as a .NET 6 site, or as a Docker container.
+* The site can be hosted in any environment, including internal or in a public/private cloud.
+* The application uses local JSON files to store the configuration of the components.
+* The application requires persistent storage. A volume is required to store configuration files, if running as a container.
+* The application contains a *repository* folder, which contains the default component configuration JSON files. When deployed, these files are then copied to the *settings* folder.
+* The Admin interface allows configurations to be "reset", if needed. This process copies the configuration from the *repository* folder to the *settings* folder.
+* The API requires an API Key for all executions. A default API Key (guid) will be generated on first launch. This value can be updated in the Admin section.
+* On the first launch, the application will prompt for the Admin password to be set.
+
+  ![Admin Password Prompt](./wwwroot/Screenshots/AdminPasswordPrompt.png)
+
+## Pages
+
+### Home Page
+
+The Home Page provides an overview of the tool and the components.
+
+![Home Page](./wwwroot/Screenshots/HomePage.png)
+
+### Configuration
+
+The Configuration Page shows the current Name Generation configuration. This page also provides an Admin section for updating the configuration.
+
+![Configuration Page](./wwwroot/Screenshots/ConfigurationPage.png)
+
+### Reference
+
+The Reference Page provides examples for each type of Azure resource. The example values do not include any excluded naming components. Optional components are always displayed and are identified below the example. Since unique names are only required at specific scopes, the examples provided are only generated for the scopes above the resource scope: resource group, resource group & region, region, global, subscription, and tenant.
+
+![Reference Page](./wwwroot/Screenshots/ReferencePage.png)
+
+### Generate
+
+The Generate Page provides a dropdown menu to select an Azure resource. Once a resource is selected, naming component options are provided. Read-only components, like the value for a resource type or organization, cannot be changed. Optional components, if left blank, will be null and not shown in the output. Required components do not allow a null value, and the first value in the array is set as the default.
+
+![Generate Page](./wwwroot/Screenshots/GeneratePage1.png)

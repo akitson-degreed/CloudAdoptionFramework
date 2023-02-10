@@ -1,7 +1,12 @@
-# Microsoft Cloud Adoption Framework for Azure - Archives
+# Azure Naming Tool Archive
 
-The [Cloud Adoption Framework](https://aka.ms/CAF) is the One Microsoft voice for cloud adoption in Azure, consolidating and sharing best practices from Microsoft employees, partners, and customers.
+> **IMPORTANT:** The latest version of the tool can be found here: [v2](../).
 
-As of November 1st, 2018, there were approximately 60 competing approaches to cloud adoption used within Microsoft. As the authors and supporting teams join the contributor program, the proceeding approaches are updated, integrated, and/or archived.
+This directory contains an archive of the previous versions of the Azure Naming Tool. Each version listed here is stored as a binary to deter pull requests of the code since this code is no longer maintained. Any issues submitted regarding the code in this directory will be automatically closed. The code is provided as a convenience for customers that may not be able upgrade immediately. Here are the previous versions:
 
-As we transition through this process, our highest priority is the preservation of customer success. To ensure this transition creates minimal disruption, archived approaches will be stored in this repo for a period of one year from archive.
+## Versions
+
+- [v1](./v1.zip):
+  
+  - Configuration is defined with a PowerShell script and CSV files.
+  - Output is an HTML file with embedded CSS and JavaScript.
